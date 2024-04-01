@@ -26,4 +26,11 @@ public class FcmController {
         return ResponseEntity.ok(true);
     }
 
+    @GetMapping("/send/topic")
+    public ResponseEntity<?> sendTopicMessage() throws FirebaseMessagingException {
+        BatchResponse response = fcmService.sendTopicMessage();
+
+        return ResponseEntity.ok(true);
+    }
+
 }
