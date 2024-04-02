@@ -38,7 +38,7 @@ public class FcmService {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     // 개별 메시지 발송
-    public BatchResponse sendMessage() throws FirebaseMessagingException, IOException {
+    public BatchResponse sendMessage() throws FirebaseMessagingException {
         // push queue 에서 메시지 데이터 가져오기
         List<FcmDTO> queueList = pushQueueRepository.getPushQueue();
 
@@ -54,20 +54,8 @@ public class FcmService {
                             .setBody(queue.getMsgContents())    // 메시지 내용
                             .build())
                     .setToken(queue.getDeviceToken())           // 전송 device push token
-                    .setAndroidConfig(AndroidConfig.builder()   // android 관련 설정
-                            .setNotification(AndroidNotification.builder()
-                                            .setPriority(AndroidNotification.Priority.HIGH)
-//                                    .setIcon("")
-//                                    .setSound(null)
-//                                    .setColor("#f45342")
-//                                    .setChannelId("")
-                                    .build())
-                            .build())
-                    .setApnsConfig(ApnsConfig.builder()         // ios 관련 설정
-                            .setAps(Aps.builder()
-                                    .setBadge(42)
-                                    .build())
-                            .build())
+                    .setAndroidConfig(androidConfig(null))
+                    .setApnsConfig(apnsConfig())
                     .build();
 
             messages.add(message);
@@ -125,6 +113,8 @@ public class FcmService {
                             .setBody(pushData.getMsgContents())
                             .build())
                     .addAllTokens(deviceTokenList)
+                    .setAndroidConfig(androidConfig(null))
+                    .setApnsConfig(apnsConfig())
                     .build();
 
             BatchResponse response = FirebaseMessaging.getInstance().sendEachForMulticast(message);
@@ -162,7 +152,9 @@ public class FcmService {
                             .setTitle(queue.getMsgTitle())
                             .setBody(queue.getMsgContents())
                             .build())
-                    .setTopic(queue.getTopic())     // topic 설정
+                    .setTopic(queue.getTopic())
+                    .setAndroidConfig(androidConfig("genius"))
+                    .setApnsConfig(apnsConfig())
                     .build();
             messages.add(message);
         }
@@ -178,5 +170,25 @@ public class FcmService {
     // 만료된 device token 처리
     public void disabledDeviceToken(List<String> deviceToken) {
         pushMemberRepository.disableDeviceToken(LocalDateTime.now(), deviceToken);
+    }
+
+    /* android 설정
+    * @channelId :: default: 알림, genius: 공지 */
+    public AndroidConfig androidConfig(String channelId){
+        return AndroidConfig.builder()
+                .setNotification(AndroidNotification.builder()
+                        .setPriority(AndroidNotification.Priority.MAX)
+                        .setChannelId(channelId != null ? channelId : "default")
+                        .build())
+                .build();
+    }
+
+    // ios 설정
+    public ApnsConfig apnsConfig() {
+        return ApnsConfig.builder()
+                .setAps(Aps.builder()
+                        .setBadge(42)
+                        .build())
+                .build();
     }
 }

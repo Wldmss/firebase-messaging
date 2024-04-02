@@ -20,7 +20,7 @@ public class FcmController {
     FcmService fcmService;
 
     @GetMapping("/send")
-    public ResponseEntity<?> sendMessage() throws FirebaseMessagingException, IOException {
+    public ResponseEntity<?> sendMessage() throws FirebaseMessagingException {
         BatchResponse response = fcmService.sendMessage();
 
         return ResponseEntity.ok(true);
