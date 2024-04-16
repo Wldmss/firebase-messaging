@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            $('#downloadBtn').click(function() {
+                window.location.href = '/api/v1/file';
+                /*$.ajax({
+                    url: '/api/v1/file',
+                    type: 'GET',
+                    success: function(data) {
+                    },
+                    error: function() {
+                        // 오류가 발생하면 알림을 표시합니다.
+                        alert('파일을 다운로드할 수 없습니다.');
+                    }
+                });*/
+            });
+        });
+    </script>
+</head>
+<body>
+    <button th:id="downloadBtn">download</button>
+</body>
+</html>
