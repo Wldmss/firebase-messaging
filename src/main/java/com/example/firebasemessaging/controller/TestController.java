@@ -108,11 +108,11 @@ public class TestController {
             if (fSize > 0) {
 
                 // 파일명을 URLEncoder 하여 attachment, Content-Disposition Header로 설정
-//                String encodedFilename = "attachment; filename*=" + "UTF-8" + "''" + URLEncoder.encode(fileName, "UTF-8");
-                String encodedFilename = "attachment; filename=\"" + new String(fileName.getBytes("EUC-KR"),"ISO-8859-1") + "\";";
+                String encodedFilename = "attachment; filename*=" + "UTF-8" + "''" + URLEncoder.encode(fileName, "UTF-8");
+//                String encodedFilename = "attachment; filename=\"" + new String(fileName.getBytes("EUC-KR"),"ISO-8859-1") + "\";";
 
                 // ContentType 설정
-                response.setContentType("application/octet-stream;");   // charset=utf-8 application/pdf;
+                response.setContentType("application/pdf;");   // charset=utf-8  application/octet-stream;
 
                 // Header 설정
                 response.setHeader("Content-Disposition", encodedFilename);

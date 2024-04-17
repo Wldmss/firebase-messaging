@@ -16,9 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FcmService {
@@ -48,6 +46,10 @@ public class FcmService {
         // 메시지 생성
         for(FcmDTO queue : queueList){
             String title = queue.getMsgTitle() != null ? queue.getMsgTitle() : "지니어스";
+
+            Map<String,String> data = new HashMap<>();
+            if(queue.getMsgLink() != null) data.put("url", queue.getMsgLink());
+
             Message message = Message.builder()
                     .setNotification(Notification.builder()
                             .setTitle(title)      // 메시지 타이틀
@@ -56,6 +58,7 @@ public class FcmService {
                     .setToken(queue.getDeviceToken())           // 전송 device push token
                     .setAndroidConfig(androidConfig(null))
                     .setApnsConfig(apnsConfig())
+                    .putAllData(data)
                     .build();
 
             messages.add(message);
