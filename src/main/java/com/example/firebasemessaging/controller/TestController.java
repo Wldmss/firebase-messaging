@@ -34,6 +34,11 @@ public class TestController {
         return authorizationHeader;
     }
 
+    @GetMapping("/check")
+    public ResponseEntity<Boolean> checkServer(){
+        return ResponseEntity.ok(true);
+    }
+
     @GetMapping("/test")
     public List<Test> getTest() {
         return testService.findAllBy();
