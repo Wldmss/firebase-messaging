@@ -17,7 +17,7 @@ import java.io.IOException;
 public class FirebaseConfig {
 
     // firebase 비공개 키 파일
-    @Value("classpath:firebase/firebase-adminsdk-240325.json")
+    @Value("classpath:firebase/ktgenius-firebase-adminsdk.json")
     private Resource resource;
 
     private FirebaseApp firebaseApp;
