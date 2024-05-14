@@ -182,7 +182,8 @@ public class FcmService {
                 .setNotification(AndroidNotification.builder()
                         .setPriority(AndroidNotification.Priority.MAX)
                         .setChannelId(channelId != null ? channelId : "default")
-                        .setColor("#000000")  // push icon 배경색 변경
+//                        .setIcon("push-icon")
+                        .setColor("#E65C19")  // push icon 배경색 변경
                         .build())
                 .build();
     }
@@ -192,6 +193,7 @@ public class FcmService {
         return ApnsConfig.builder()
                 .setAps(Aps.builder()
                         .setBadge(42)
+                        .setContentAvailable(true)
                         .build())
                 .build();
     }

@@ -46,20 +46,34 @@ public class TestController {
 
     @PostMapping(value = "/login", produces = "application/json; charset=UTF8")
     public ResponseEntity<ResultDTO> login(@RequestBody LoginDTO loginDTO) {
-        Account account = testService.getAccountByMembId(loginDTO.getUsername());
+        String tokenResult = null;
+        if(loginDTO.getUsername() != null && loginDTO.getPassword() != null){
+            Account account = testService.getAccountByMembId(loginDTO.getUsername());
 
-        String[] testToken = {account.getMembId(), account.getPwEndDt().format(formatter)};
-        String tokenResult = String.join("&", testToken);
+            if(account != null){
+                String[] testToken = {account.getMembId(), account.getPwEndDt().format(formatter)};
+                tokenResult = String.join("&", testToken);
+            }
+
+            if (loginDTO.getDeviceToken() != null) {
+                testService.savePushMember(PushMember.builder()
+                        .deviceToken(loginDTO.getDeviceToken())
+                        .membId(loginDTO.getUsername())
+                        .activate(1)
+                        .creDate(LocalDateTime.now())
+                        .build());
+            }
+        }
 
         ResultDTO result = ResultDTO.builder()
                 .token(tokenResult)
                 .build();
 
-        return ResponseEntity.ok(result);
+        return tokenResult != null ? ResponseEntity.ok(result) : null;
     }
 
-    @GetMapping(value = "/login/check")
-    public ResponseEntity<ResultDTO> checkLogin(HttpServletRequest request) {
+    @PostMapping(value = "/login/check", produces = "application/json; charset=UTF8")
+    public ResponseEntity<ResultDTO> checkLogin(HttpServletRequest request, @RequestBody LoginDTO loginDTO) {
         String authorizationHeader = request.getHeader("Authorization");    // username, pw 만료일
         LoginDTO login = testService.getLogin(authorizationHeader);
 
@@ -67,6 +81,15 @@ public class TestController {
         boolean isSame = testService.checkAccount(login.getUsername(), date);
 
         if (isSame) {
+            if (loginDTO.getDeviceToken() != null) {
+                testService.savePushMember(PushMember.builder()
+                        .deviceToken(loginDTO.getDeviceToken())
+                        .membId(login.getUsername())
+                        .activate(1)
+                        .creDate(LocalDateTime.now())
+                        .build());
+            }
+
             ResultDTO result = ResultDTO.builder()
                     .token(authorizationHeader)
                     .build();
