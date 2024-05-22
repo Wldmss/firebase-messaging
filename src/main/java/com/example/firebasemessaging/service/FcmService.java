@@ -182,7 +182,9 @@ public class FcmService {
                 .setNotification(AndroidNotification.builder()
                         .setPriority(AndroidNotification.Priority.MAX)
                         .setChannelId(channelId != null ? channelId : "default")
-//                        .setIcon("push-icon")
+//                        .setClickAction("ktgenius://push?url=/mobile/m/support/notice/noticeList.do")
+                                .setClickAction("https://naver.com")
+//                        .setIcon("app-icon")
                         .setColor("#E65C19")  // push icon 배경색 변경
                         .build())
                 .build();

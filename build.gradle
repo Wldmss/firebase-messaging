@@ -40,6 +40,9 @@ dependencies {
     // Thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+    // JBoss Logging
+    implementation 'org.jboss.logging:jboss-logging:3.4.3.Final'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

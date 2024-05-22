@@ -7,8 +7,9 @@
     <script th:inline="javascript">
         $(document).ready(function() {
             $('#downloadBtn').click(function() {
+                window.location.href = 'ktgenius://push?url=/mobile/m/support/notice/noticeList.do&test=1212231';
                 // window.location.href = '/api/v1/file';
-                window.location.href = 'itms-services://?action=download-manifest&amp;url=https://drive.google.com/file/d/1bmSQh55kwghDotaal1Sk2dfISVn9utT6/view?usp=drive_link';
+                // window.location.href = 'itms-services://?action=download-manifest&amp;url=https://drive.google.com/file/d/1bmSQh55kwghDotaal1Sk2dfISVn9utT6/view?usp=drive_link';
                 /*$.ajax({
                     url: '/api/v1/file',
                     type: 'GET',
@@ -20,14 +21,21 @@
                     }
                 });*/
             });
+
+            $('#checkIn').click(function() {
+                window.location.href = $("#input").val();
+            });
         });
     </script>
 </head>
 <body>
-<!--    <button th:id="downloadBtn">download</button>-->
+    <button th:id="downloadBtn">deep link test</button>
+
+    <input type="text" value="ktgenius://link/checkin" th:id="input" />
+    <button th:id="checkIn">checkIn</button>
 <!--    <button th:id="changePin">changePin</button>-->
 <div th:inline="none" style="font-size:50pt;">
-    <a href="itms-services://?action=download-manifest&url=https://4c82-2001-2d8-6a2f-d33a-70d9-aa6f-c6cb-f900.ngrok-free.app/file/download/genius.plist">다운로드</a>
+    <a href="itms-services://?action=download-manifest&url=https://9ed2-211-36-133-190.ngrok-free.app/file/download/genius.plist">다운로드</a>
 </div>
 
 </body>

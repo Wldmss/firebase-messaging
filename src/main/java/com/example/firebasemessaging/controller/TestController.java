@@ -75,7 +75,10 @@ public class TestController {
     @PostMapping(value = "/login/check", produces = "application/json; charset=UTF8")
     public ResponseEntity<ResultDTO> checkLogin(HttpServletRequest request, @RequestBody LoginDTO loginDTO) {
         String authorizationHeader = request.getHeader("Authorization");    // username, pw 만료일
-        LoginDTO login = testService.getLogin(authorizationHeader);
+//        LoginDTO login = testService.getLogin(authorizationHeader);
+        LoginDTO login = LoginDTO.builder()
+                .username("91352089")
+                .pwEndDt("2024-01-01").build();
 
         LocalDateTime date = LocalDateTime.parse(login.getPwEndDt(), formatter);
         boolean isSame = testService.checkAccount(login.getUsername(), date);
@@ -103,12 +106,12 @@ public class TestController {
     @PostMapping(value = "/push", produces = "application/json; charset=UTF8")
     public ResponseEntity<?> push(HttpServletRequest request, @RequestBody PushDTO pushDTO) {
         String authorizationHeader = request.getHeader("Authorization");    // username, pw 만료일
-        LoginDTO login = testService.getLogin(authorizationHeader);
+//        LoginDTO login = testService.getLogin(authorizationHeader);
 
         if (pushDTO.getDeviceToken() != null) {
             testService.savePushMember(PushMember.builder()
                     .deviceToken(pushDTO.getDeviceToken())
-                    .membId(login.getUsername())
+                    .membId("91352089")
                     .activate(1)
                     .creDate(LocalDateTime.now())
                     .build());
