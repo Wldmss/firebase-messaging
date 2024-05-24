@@ -25,17 +25,21 @@
             $('#checkIn').click(function() {
                 window.location.href = $("#input").val();
             });
+
         });
     </script>
 </head>
 <body>
-    <button th:id="downloadBtn">deep link test</button>
-
-    <input type="text" value="ktgenius://link/checkin" th:id="input" />
-    <button th:id="checkIn">checkIn</button>
-<!--    <button th:id="changePin">changePin</button>-->
+    <button th:id="downloadBtn" style="font-size:50pt;">deep link test</button>
+    <br>
+    <input type="text" value="ktgenius://link/checkin" th:id="input"  style="font-size:30pt;"/>
+    <button th:id="checkIn" style="font-size:50pt;">checkIn</button>
+    <br>
+    <button th:id="openCamera" style="font-size:50pt;">openCamera</button>
+    <br>
+    <!--    <button th:id="changePin">changePin</button>-->
 <div th:inline="none" style="font-size:50pt;">
-    <a href="itms-services://?action=download-manifest&url=https://9ed2-211-36-133-190.ngrok-free.app/file/download/genius.plist">다운로드</a>
+    <a href="itms-services://?action=download-manifest&url=https://1ff4-220-70-19-87.ngrok-free.app/file/download/genius-test.plist">다운로드</a>
 </div>
 
 </body>
