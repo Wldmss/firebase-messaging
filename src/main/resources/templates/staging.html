@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script th:inline="javascript">
+        $(document).ready(function() {
+
+        });
+    </script>
+</head>
+<body>
+    <div style="display: flex; gap: 70px; flex-direction: column; justify-content: center; padding: 50px">
+        <span style="font-size:40pt; font-weight: bold; text-align: center">KT 그룹교육 (테스트) 앱 다운로드</span>
+        <div style="font-size:50pt; display: flex; flex-direction: column; text-align: center; gap: 30px">
+            <div th:inline="none">
+                <a href="itms-services://?action=download-manifest&url=https://8d0d-211-36-158-115.ngrok-free.app/file/download/manifest-staging.plist">
+                    IOS
+                </a>
+            </div>
+            <div th:inline="none">
+                <a href="https://expo.dev/artifacts/eas/cnbrdD25saaPUEsr6Cn8Vk.apk">
+                    Android
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

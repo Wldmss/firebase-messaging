@@ -156,7 +156,7 @@ public class FcmService {
                             .setBody(queue.getMsgContents())
                             .build())
                     .setTopic(queue.getTopic())
-                    .setAndroidConfig(androidConfig("genius"))
+                    .setAndroidConfig(androidConfig(null))
                     .setApnsConfig(apnsConfig())
                     .build();
             messages.add(message);
@@ -180,12 +180,12 @@ public class FcmService {
     public AndroidConfig androidConfig(String channelId){
         return AndroidConfig.builder()
                 .setNotification(AndroidNotification.builder()
-                        .setPriority(AndroidNotification.Priority.MAX)
+//                        .setPriority(AndroidNotification.Priority.MAX)
                         .setChannelId(channelId != null ? channelId : "default")
-//                        .setClickAction("ktgenius://push?url=/mobile/m/support/notice/noticeList.do")
-                                .setClickAction("https://naver.com")
-//                        .setIcon("app-icon")
-                        .setColor("#E65C19")  // push icon 배경색 변경
+////                        .setClickAction("ktgenius://push?url=/mobile/m/support/notice/noticeList.do")
+////                                .setClickAction("https://naver.com")
+////                        .setIcon("app-icon")
+//                        .setColor("#E65C19")  // push icon 배경색 변경
                         .build())
                 .build();
     }
@@ -194,7 +194,7 @@ public class FcmService {
     public ApnsConfig apnsConfig() {
         return ApnsConfig.builder()
                 .setAps(Aps.builder()
-                        .setBadge(42)
+//                        .setBadge(3)
                         .setContentAvailable(true)
                         .build())
                 .build();
