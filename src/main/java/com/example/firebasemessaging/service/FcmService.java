@@ -185,7 +185,7 @@ public class FcmService {
 ////                        .setClickAction("ktgenius://push?url=/mobile/m/support/notice/noticeList.do")
 ////                                .setClickAction("https://naver.com")
 ////                        .setIcon("app-icon")
-//                        .setColor("#E65C19")  // push icon 배경색 변경
+//                        .setColor("#FF4F55")  // push icon 배경색 변경
                         .build())
                 .build();
     }
