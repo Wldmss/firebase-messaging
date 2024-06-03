@@ -9,15 +9,21 @@ import com.example.firebasemessaging.datasource.vo.PushMember;
 import com.example.firebasemessaging.datasource.vo.Test;
 import com.example.firebasemessaging.service.TestService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.codec.binary.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -225,5 +231,41 @@ public class TestController {
         }
     }
 
+    @PostMapping("cipher")
+    public ResponseEntity<String> decrypt(@RequestBody Map<String, Object> param){
+        try {
+            // 암호화된 문자열을 정의합니다.
+            String encryptedData = param.get("encrypt").toString();
+
+            // 암호화에 사용된 키와 IV를 정의합니다.
+            String key = param.get("key").toString(); // 32 바이트 키
+            String iv = param.get("iv").toString(); // 16 바이트 IV
+
+            // 키와 IV를 바이트 배열로 변환합니다.
+            byte[] keyBytes = key.getBytes("UTF-8");
+            byte[] ivBytes = iv.getBytes("UTF-8");
+
+            // 복호화 설정을 구성합니다.
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(ivBytes);
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+
+            // Base64로 인코딩된 암호화 데이터를 디코딩합니다.
+//            byte[] encryptedBytes = Base64.getDecoder().decode(encryptedData);
+            byte[] encryptedBytes = Hex.decodeHex(encryptedData.toCharArray());
+
+            // 데이터를 복호화합니다.
+            byte[] originalBytes = cipher.doFinal(encryptedBytes);
+            String originalData = new String(originalBytes, "UTF-8");
+
+            System.out.println("Decrypted: " + originalData);
+            return ResponseEntity.ok(originalData);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok("");
+        }
+    }
 
 }
