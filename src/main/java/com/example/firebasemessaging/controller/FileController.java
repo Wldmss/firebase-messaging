@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 
 @Controller
 @RequestMapping("/file")
@@ -33,6 +34,8 @@ public class FileController {
             // 경로와 파일명으로 파일 객체를 생성한다.
             File dFile  = new File(filePath, fileName);
 
+            String mimeType = Files.probeContentType(dFile.toPath());
+
             // 파일 길이를 가져온다.
             int fSize = (int) dFile.length();
 
@@ -43,7 +46,7 @@ public class FileController {
                 String encodedFilename = "attachment; filename*=" + "UTF-8" + "''" + URLEncoder.encode(fileName, "UTF-8");
 
                 // ContentType 설정
-                response.setContentType("application/octet-stream; charset=utf-8");
+                response.setContentType(mimeType + "; charset=utf-8"); //application/octet-stream
 
                 // Header 설정
                 response.setHeader("Content-Disposition", encodedFilename);
