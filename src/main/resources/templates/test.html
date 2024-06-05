@@ -30,23 +30,29 @@
     </script>
 </head>
 <body>
+<div style="display: flex; font-size:50pt; gap: 30px; flex-direction: column; justify-content: center; padding: 50px">
     <button th:id="downloadBtn" style="font-size:50pt;">deep link test</button>
-    <br>
-    <input type="text" value="ktgenius://link/checkin" th:id="input"  style="font-size:30pt;"/>
-    <button th:id="checkIn" style="font-size:50pt;">checkIn</button>
-    <br>
+
+    <div>
+        <input type="text" value="ktgenius://link/checkin" th:id="input"  style="font-size:30pt;"/>
+        <button th:id="checkIn" style="font-size:50pt;">checkIn</button>
+    </div>
+
     <button th:id="openCamera" style="font-size:50pt;">openCamera</button>
-    <br>
-    <!--    <button th:id="changePin">changePin</button>-->
-<div th:inline="none" style="font-size:50pt;">
-    <a href="itms-services://?action=download-manifest&url=https://916d-220-70-19-87.ngrok-free.app/file/download/genius-test.plist">다운로드</a>
-</div>
+
+    <button th:id="changePin" style="font-size:50pt;">changePin</button>
+
+    <button th:id="changeBio" style="font-size:50pt;">changeBio</button>
+
+    <div th:inline="none" style="font-size:50pt;">
+        <a href="itms-services://?action=download-manifest&url=https://916d-220-70-19-87.ngrok-free.app/file/download/genius-test.plist">다운로드</a>
+    </div>
+
     <div th:inline="none" style="font-size:50pt;">
         <a href="/file/download/지니어스 사용자 매뉴얼.pdf">
             DOWNLOAD
         </a>
     </div>
-
-
+</div>
 </body>
 </html>
