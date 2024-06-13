@@ -49,6 +49,7 @@ public class FcmService {
 
             Map<String,String> data = new HashMap<>();
             if(queue.getMsgLink() != null) data.put("url", queue.getMsgLink());
+            data.put("channelId","default");
 
             Message message = Message.builder()
                     .setNotification(Notification.builder()

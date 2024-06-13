@@ -26,6 +26,13 @@
                 window.location.href = $("#input").val();
             });
 
+            $('.fileDown').click(function() {
+                // let urlValue = 'https://www.naver.com';
+                // window.ReactNativeWebView.postMessage(JSON.stringify({ type : 'openUrl', url : urlValue }));
+
+                window.ReactNativeWebView.postMessage(JSON.stringify({ type : 'fileDown', url : 'https://4ded-211-36-136-213.ngrok-free.app/file/download/login.pptx', data: { fileNm: 'login.pptx' } }));
+            });
+
         });
     </script>
 </head>
@@ -44,8 +51,14 @@
 
     <button th:id="changeBio" style="font-size:50pt;">changeBio</button>
 
+    <button th:id="changeMobileLogin" style="font-size:50pt;">changeMobileLogin</button>
+
+    <button th:id="openUrl" style="font-size:50pt;">openUrl</button>
+
+    <button th:class="fileDown" style="font-size:50pt;">fileDown</button>
+
     <div th:inline="none" style="font-size:50pt;">
-        <a href="itms-services://?action=download-manifest&url=https://040d-220-70-19-87.ngrok-free.app/file/download/genius-test.plist">다운로드</a>
+        <a href="itms-services://?action=download-manifest&url=https://4ded-211-36-136-213.ngrok-free.app/file/download/genius-test.plist">다운로드</a>
     </div>
 
     <div th:inline="none" style="font-size:50pt;">
