@@ -21,16 +21,20 @@ public class FileController {
         return "test";
     }
 
+    @GetMapping("/download/plist/{fileName}")
+    public void downloadPlist(HttpServletRequest request, HttpServletResponse response, @PathVariable("fileName") String fileName) {
+        String filePath = "G:\\내 드라이브\\KT\\genius\\plist";
+        download(response, filePath, fileName);
+    }
+
     @GetMapping("/download/{fileName}")
-    public void downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable("fileName") String fileName) throws Exception {
+    public void downloadFile(HttpServletRequest request, HttpServletResponse response, @PathVariable("fileName") String fileName) {
+        String filePath = "G:\\내 드라이브\\KT\\genius";
+        download(response, filePath, fileName);
+    }
 
+    public void download(HttpServletResponse response, String filePath, String fileName) {
         try {
-            // 다운로드 받을 파일명을 가져온다.
-//            String fileName = "genius.plist";
-
-            // 다운로드 경로 (내려받을 파일경로를 설정한다.)
-            String filePath = "G:\\내 드라이브\\KT\\genius";
-
             // 경로와 파일명으로 파일 객체를 생성한다.
             File dFile  = new File(filePath, fileName);
 
@@ -44,12 +48,18 @@ public class FileController {
 
                 // 파일명을 URLEncoder 하여 attachment, Content-Disposition Header로 설정
                 String encodedFilename = "attachment; filename*=" + "UTF-8" + "''" + URLEncoder.encode(fileName, "UTF-8");
+//                String encodedFilename = "attachment;filename=\"" + new String(fileName.getBytes("EUC-KR"), "ISO-8859-1") + "\";";
 
                 // ContentType 설정
                 response.setContentType(mimeType + "; charset=utf-8"); //application/octet-stream
+//                response.setContentType("application/octet-stream");
 
                 // Header 설정
                 response.setHeader("Content-Disposition", encodedFilename);
+
+//                response.setHeader("Content-Transfer-Encoding","binary");
+//                response.setHeader("Pragma","no-cache");
+//                response.setHeader("Expires","-1;");
 
                 // ContentLength 설정
                 response.setContentLengthLong(fSize);
