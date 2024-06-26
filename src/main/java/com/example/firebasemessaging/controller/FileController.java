@@ -2,8 +2,10 @@ package com.example.firebasemessaging.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.file.Files;
+import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/file")
@@ -57,12 +61,13 @@ public class FileController {
                 // Header 설정
                 response.setHeader("Content-Disposition", encodedFilename);
 
+//                response.setHeader("Transfer-Encoding","chunked");
 //                response.setHeader("Content-Transfer-Encoding","binary");
 //                response.setHeader("Pragma","no-cache");
 //                response.setHeader("Expires","-1;");
 
                 // ContentLength 설정
-                response.setContentLengthLong(fSize);
+//                response.setContentLengthLong(fSize);
 
                 BufferedInputStream in = null;
                 BufferedOutputStream out = null;
@@ -118,5 +123,4 @@ public class FileController {
             e.printStackTrace();
         }
     }
-
 }
